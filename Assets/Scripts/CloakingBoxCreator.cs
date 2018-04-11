@@ -43,7 +43,7 @@ namespace CloakingBox
 
             // Set box layer to invisible to avoid having it seen by the render
             // texture camera
-            cloakingBox.layer = LayerManager.GetLayerMask(CloakLayers.Invisible);
+            cloakingBox.layer = LayerManager.GetLayerMask(CloakLayers.Box);
 
             // Generate the box faces
             GameObject frontFace = generateCloakingBoxFaceObject(BoxFaceNames.Front);
@@ -121,7 +121,7 @@ namespace CloakingBox
 
             // Set box layer to invisible to avoid having it seen by the render
             // texture camera
-            boxFace.layer = LayerManager.GetLayerMask(CloakLayers.Invisible);
+            boxFace.layer = LayerManager.GetLayerMask(CloakLayers.Box);
 
             return boxFace;
         }

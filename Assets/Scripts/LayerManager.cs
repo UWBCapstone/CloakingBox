@@ -6,30 +6,30 @@ namespace CloakingBox
 {
     public enum CloakLayers
     {
-        Visible,
-        Invisible
+        Room,
+        Box
     };
 
     public class LayerManager : MonoBehaviour
     {
-        public string VisibleLayer = "Visible";
-        public string InvisibleLayer = "Invisible";
+        public string RoomLayer = "Room";
+        public string BoxLayer = "Box";
         
-        public static string VisibleLayer_s = "Visible";
-        public static string InvisibleLayer_s = "Invisible";
+        public static string RoomLayer_s = "Room";
+        public static string BoxLayer_s = "Box";
 
         // Update is called once per frame
         void Update()
         {
-            if (!VisibleLayer_s.Equals(VisibleLayer))
+            if (!RoomLayer_s.Equals(RoomLayer))
             {
                 // set the static layer to be the correct one
-                VisibleLayer_s = VisibleLayer;
+                RoomLayer_s = RoomLayer;
             }
-            if (!InvisibleLayer_s.Equals(InvisibleLayer))
+            if (!BoxLayer_s.Equals(BoxLayer))
             {
                 // set the static layer to be the correct one
-                InvisibleLayer_s = InvisibleLayer;
+                BoxLayer_s = BoxLayer;
             }
         }
 
@@ -38,11 +38,11 @@ namespace CloakingBox
             LayerMask mask = LayerMask.NameToLayer("Default");
             switch (layer)
             {
-                case CloakLayers.Visible:
-                    mask = LayerMask.NameToLayer(VisibleLayer_s);
+                case CloakLayers.Room:
+                    mask = LayerMask.NameToLayer(RoomLayer_s);
                     break;
-                case CloakLayers.Invisible:
-                    mask = LayerMask.NameToLayer(InvisibleLayer_s);
+                case CloakLayers.Box:
+                    mask = LayerMask.NameToLayer(BoxLayer_s);
                     break;
             }
             return mask;
@@ -51,10 +51,22 @@ namespace CloakingBox
         public static List<string> GetLayerNameList()
         {
             List<string> layerNameList = new List<string>();
-            layerNameList.Add(VisibleLayer_s);
-            layerNameList.Add(InvisibleLayer_s);
+            layerNameList.Add(RoomLayer_s);
+            layerNameList.Add(BoxLayer_s);
 
             return layerNameList;
+        }
+
+        public static LayerMask GetCullingMaskWithout(List<CloakLayers> layersToIgnore)
+        {
+            int everythingCullingMask = ~0;
+            int mask = everythingCullingMask;
+            foreach(CloakLayers layer in layersToIgnore)
+            {
+                mask = mask & ~GetLayerMask(layer);
+            }
+
+            return mask;
         }
     }
 }
