@@ -107,7 +107,7 @@ namespace Tango
     /// </summary>
     public partial class TangoApplication : MonoBehaviour, ITangoApplication
     {
-#region PublicFields
+        #region PublicFields
         public bool m_autoConnectToService = false;
         public bool m_allowOutOfDateTangoAPI = false;
         public bool m_enableMotionTracking = true;
