@@ -15,13 +15,16 @@ namespace CloakingBox
         // Load the image when requested
 
         public static MyTangoFileManager fileManager_m;
-        public string RoomName = "DefaultRoomName";
+        public static readonly string DefaultRoomName = "DefaultRoomName";
+        public string RoomName = DefaultRoomName;
         public Texture2D Texture;
 
         public void Start()
         {
             setMyTangoFileManager();
-            Texture = new Texture2D(fileManager_m.TangoCameraPixelWidth, fileManager_m.TangoCameraPixelHeight, TextureFormat.RGBA32, false);
+            Texture = new Texture2D(MyTangoFileManager.TangoCameraPixelWidth, MyTangoFileManager.TangoCameraPixelHeight, TextureFormat.RGBA32, false);
+
+            WorkflowDebugger.Log("Tango MetaImage handler started...");
         }
 
         private void setMyTangoFileManager()
@@ -39,6 +42,8 @@ namespace CloakingBox
         public void Save(string roomName)
         {
             fileManager_m.SaveThumbnail(roomName);
+
+            WorkflowDebugger.Log("Tango Meta Image saved thumbnail...");
         }
 
         /// <summary>
@@ -52,8 +57,24 @@ namespace CloakingBox
         public void Load(string roomName)
         {
             byte[] pngBytes = fileManager_m.LoadThumbnail(roomName);
-            Texture.SetPixels(MyTangoFileManager.GetPixelsFromBytes(pngBytes));
+            if (pngBytes != null) // file was found
+            {
+                Texture.SetPixels(MyTangoFileManager.GetPixelsFromBytes(pngBytes));
+            }
+            else
+            {
+                // If texture thumbnail does not exist...
+                for(int i = 0; i < Texture.width; i++)
+                {
+                    for(int j = 0; j < Texture.height; j++)
+                    {
+                        Texture.SetPixel(i, j, Color.black);
+                    }
+                }
+            }
             Texture.Apply();
+
+            WorkflowDebugger.Log("Tango Meta Image thumbnail loaded...");
         }
 
         /// <summary>

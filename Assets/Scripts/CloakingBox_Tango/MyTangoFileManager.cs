@@ -23,13 +23,19 @@ namespace CloakingBox
         public void Start()
         {
             _lock = new Semaphore(1, 1);
-            DontDestroyOnLoad(gameObject);
+            //DontDestroyOnLoad(gameObject);
+#if UNITY_ANDROID
+            SetFileDirectory(Application.persistentDataPath);
+#else
             SetFileDirectory(Application.dataPath);
+#endif
             SetRoomName("DefaultRoomName");
+
+            WorkflowDebugger.Log("Custom Tango File Manager started...");
         }
 
-        #region Methods
-        #region Setters
+#region Methods
+#region Setters
         public void SetFileDirectory(string directory)
         {
             _lock.WaitOne();
@@ -40,7 +46,12 @@ namespace CloakingBox
         public void SetFileDirectory()
         {
             _lock.WaitOne();
+#if UNITY_ANDROID
+            FileDirectory = Path.Combine(Application.persistentDataPath, FileFolder);
+#else
             FileDirectory = Path.Combine(Application.dataPath, FileFolder);
+#endif
+
             _lock.Release();
 
             Directory.CreateDirectory(FileDirectory);
@@ -54,9 +65,9 @@ namespace CloakingBox
             RoomName = roomName;
             _lock.Release();
         }
-        #endregion
+#endregion
 
-        #region Getters
+#region Getters
         public string GetFileName(string roomName, MyTangoFileTypes filetype)
         {
             string fileName = "";
@@ -115,9 +126,9 @@ namespace CloakingBox
 
             return name;
         }
-        #endregion
+#endregion
 
-        #region Saving / Loading
+#region Saving / Loading
         //public void SetFileSettings(string directory, string roomName)
         //{
         //    FileDirectory = directory;
@@ -133,6 +144,8 @@ namespace CloakingBox
             ThreadManager.Register(saveThumbnailThread_t);
             ThreadManager.RegisterOnJoin(saveThumbnailThread_t, finishSavingThumbnail);
             saveThumbnailThread_t.Start();
+
+            WorkflowDebugger.Log("Tango room thumbnail save process main thread completed...");
         }
 
         //public void SaveRoom(string directory, string roomName)
@@ -142,7 +155,7 @@ namespace CloakingBox
         //    saveThread.Start();
         //}
 
-        #region Saving Thread Logic
+#region Saving Thread Logic
         public void saveThumbnailThread()
         {
             // Take the picture from the Tango camera - this should be the same as the Android camera
@@ -185,7 +198,7 @@ namespace CloakingBox
             {
             }
         }
-        #endregion
+#endregion
 
         //public void LoadRoom(string roomName)
         //{
@@ -234,6 +247,8 @@ namespace CloakingBox
                 }
             }
 
+            WorkflowDebugger.Log("Tango room loaded (custom save path)...");
+
             return room;
         }
 
@@ -244,18 +259,32 @@ namespace CloakingBox
         public byte[] LoadThumbnail(string roomName)
         {
             string filepath = GetFilePath(GetFileDirectory(), roomName, MyTangoFileTypes.Thumbnail);
-            using (FileStream fs = new FileStream(filepath, FileMode.Open))
+            if (File.Exists(filepath))
             {
-                FileInfo fileInfo = new FileInfo(filepath);
-                byte[] pngBytes = new byte[(int)(fileInfo.Length)];
-                int bytesRead = fs.Read(pngBytes, 0, pngBytes.Length);
+                using (FileStream fs = new FileStream(filepath, FileMode.Open))
+                {
+                    FileInfo fileInfo = new FileInfo(filepath);
+                    byte[] pngBytes = new byte[(int)(fileInfo.Length)];
+                    int bytesRead = fs.Read(pngBytes, 0, pngBytes.Length);
 
-                return pngBytes;
+                    WorkflowDebugger.Log("Tango room thumbnail loaded...");
+
+                    return pngBytes;
+                }
+            }
+            else
+            {
+                return null;
             }
         }
 
         public static Color[] GetPixelsFromBytes(byte[] pngBytes)
         {
+            if(pngBytes == null)
+            {
+                return null;
+            }
+
             Texture2D tex = new Texture2D(nTangoCamPixelWidth, nTangoCamPixelHeight, TextureFormat.RGBA32, false);
             tex.LoadImage(pngBytes);
             tex.Apply();
@@ -267,25 +296,25 @@ namespace CloakingBox
 #endif
             return pixels;
         }
-        #endregion
-        #endregion
+#endregion
+#endregion
 
-        #region Properties
-        public int TangoCameraPixelWidth
+#region Properties
+        public static int TangoCameraPixelWidth
         {
             get
             {
                 return nTangoCamPixelWidth;
             }
         }
-        public int TangoCameraPixelHeight
+        public static int TangoCameraPixelHeight
         {
             get
             {
                 return nTangoCamPixelHeight;
             }
         }
-        #endregion
+#endregion
     }
 }
 #endif

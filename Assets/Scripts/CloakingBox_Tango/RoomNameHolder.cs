@@ -29,6 +29,7 @@ namespace CloakingBox
         public void SetRoomName(string roomName)
         {
             RoomName = roomName;
+            WorkflowDebugger.Log("Room Name Holder set room name as " + roomName);
         }
 
         public static string RoomName

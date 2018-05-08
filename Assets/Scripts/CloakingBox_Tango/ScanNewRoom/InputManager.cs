@@ -11,16 +11,21 @@ namespace CloakingBox.ScanNewRoom
 {
     public class InputManager : MonoBehaviour
     {
+        public bool CreateThumbnails = true;
         private MyTangoFileManager customTangoFileManager_m;
 
         public void Start()
         {
             customTangoFileManager_m = GameObject.FindObjectOfType<MyTangoFileManager>();
+
+            WorkflowDebugger.Log("Starting InputManager...");
         }
 
         // When i hit the button, do the thing
         public void SaveRoom()
         {
+            WorkflowDebugger.Log("Starting save room process for Tango room (non-custom save path)...");
+
             // Show the "Saving..." text
             GameObject SavingText = GameObject.Find("SavingText");
             SavingText.GetComponent<UnityEngine.UI.Text>().enabled = true;
@@ -32,11 +37,16 @@ namespace CloakingBox.ScanNewRoom
             
             saveThread.Start();
 
-            // Handle saving the thumbnail
-            customTangoFileManager_m.SaveThumbnail(getRoomName());
+            if (CreateThumbnails)
+            {
+                // Handle saving the thumbnail
+                customTangoFileManager_m.SaveThumbnail(getRoomName());
+            }
 
             //GetRoomNameHolder().RoomName = getRoomName();
             RoomNameHolder.RoomName = getRoomName();
+
+            WorkflowDebugger.Log("Finished main thread of save room process for Tango room (non-custom save path)...");
         }
 
         public void SaveThread()
@@ -55,6 +65,8 @@ namespace CloakingBox.ScanNewRoom
 
         public void ExitScanMode()
         {
+            WorkflowDebugger.Log("Exiting scan mode...");
+
             RoomNameHolder.RoomName = getRoomName();
             LevelManager.LoadLevel("Scenes/CloakingBox_Tango/BoxScene");
         }
@@ -80,6 +92,8 @@ namespace CloakingBox.ScanNewRoom
         {
             GameObject SavingText = GameObject.Find("SavingText");
             SavingText.GetComponent<UnityEngine.UI.Text>().enabled = false;
+
+            WorkflowDebugger.Log("Finished thread for save room process for Tango room (non-custom save)...");
         }
     }
 }

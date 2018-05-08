@@ -26,14 +26,18 @@ namespace CloakingBox
 
         public void SetFileDirectory()
         {
+#if UNITY_ANDROID
+            FileDirectory = Path.Combine(Application.persistentDataPath, FileFolder);
+#else
             FileDirectory = Path.Combine(Application.dataPath, FileFolder);
+#endif
 
             Directory.CreateDirectory(FileDirectory);
             Debug.Log("Room File (Area Learning Descriptions) directory set to " + FileDirectory);
         }
-        #endregion
+#endregion
 
-        #region Getters
+#region Getters
         public string GetFileName(string roomName)
         {
             return roomName + FileExtension;
@@ -45,9 +49,9 @@ namespace CloakingBox
             string filepath = Path.Combine(directory, fileName);
             return filepath;
         }
-        #endregion
+#endregion
 
-        #region Saving / Loading
+#region Saving / Loading
         public void SetFileSettings(string directory, string roomName)
         {
             FileDirectory = directory;
@@ -61,7 +65,7 @@ namespace CloakingBox
             saveThread.Start();
         }
 
-        #region Saving Thread Logic
+#region Saving Thread Logic
         public void SaveThread()
         {
             try
@@ -78,7 +82,7 @@ namespace CloakingBox
             {
             }
         }
-        #endregion
+#endregion
 
         //public void LoadRoom(string roomName)
         //{
@@ -129,8 +133,8 @@ namespace CloakingBox
 
             return room;
         }
-        #endregion
-        #endregion
+#endregion
+#endregion
     }
 }
 #endif

@@ -5,7 +5,7 @@ using UnityEngine;
 #if UNITY_ANDROID || UNITY_EDITOR
 using Tango;
 
-namespace CloakingBox.ChooseOldRoom
+namespace CloakingBox.BoxScene
 {
     public class RoomManager : MonoBehaviour, ITangoLifecycle
     {
@@ -113,7 +113,7 @@ namespace CloakingBox.ChooseOldRoom
 
             return null;
         }
-        
+
         public void OnTangoServiceConnected() { }
 
         public void OnTangoServiceDisconnected() { }

@@ -7,7 +7,7 @@ using CloakingBox;
 #if UNITY_ANDROID || UNITY_EDITOR
 using Tango;
 
-namespace CloakingBox.ScanNewRoom
+namespace CloakingBox.BoxScene
 {
     public class AreaLearningStartup : MonoBehaviour, ITangoLifecycle
     {
@@ -33,7 +33,8 @@ namespace CloakingBox.ScanNewRoom
         {
             if (permissionsGranted)
             {
-                StartTangoApplication();
+                Invoke("StartTangoApplication", 0.5f);
+                //StartTangoApplication();
                 WorkflowDebugger.Log("Tango application permissions accepted. Starting tango application...");
             }
         }
@@ -43,7 +44,10 @@ namespace CloakingBox.ScanNewRoom
         /// </summary>
         public void StartTangoApplication()
         {
-            TangoManager.Startup(null);
+            string roomNameToLoad = RoomNameHolder.RoomName;
+            AreaDescription room = RoomManager.GetRoom(roomNameToLoad);
+
+            TangoManager.Startup(room);
         }
 
         public void OnTangoServiceConnected()

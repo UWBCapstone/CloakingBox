@@ -28,7 +28,9 @@ namespace CloakingBox
                     // Make room invisible to the main camera
                     int everythingLayerMask = ~0;
                     int roomLayerMask = LayerManager.GetLayerMask(CloakLayers.Room);
-                    mainCam.cullingMask = everythingLayerMask & ~(1 << roomLayerMask); // Show everything except for the room layer
+                    int debugLayerMask = LayerManager.GetLayerMask(CloakLayers.Debug);
+                    //mainCam.cullingMask = everythingLayerMask & ~(1 << roomLayerMask); // Show everything except for the room layer
+                    mainCam.cullingMask = everythingLayerMask & ~(1 << roomLayerMask) & ~(1 << debugLayerMask); // Show everything except for the room layer
                 }
             }
             if (RenderTextureCamera != null)
@@ -39,7 +41,9 @@ namespace CloakingBox
                     // Make the box invisible to the render camera (should still have blackness shown for background since it is a depth clear flag on the render camera
                     int everythingLayerMask = ~0;
                     int boxLayerMask = LayerManager.GetLayerMask(CloakLayers.Box);
-                    renderCam.cullingMask = everythingLayerMask & ~(1 << boxLayerMask);
+                    int debugLayerMask = LayerManager.GetLayerMask(CloakLayers.Debug);
+                    //renderCam.cullingMask = everythingLayerMask & ~(1 << boxLayerMask);
+                    renderCam.cullingMask = everythingLayerMask & ~(1 << boxLayerMask) & ~(1 << debugLayerMask);
                 }
             }
         }

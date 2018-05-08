@@ -11,12 +11,12 @@ namespace CloakingBox.Start
         // There is a yes and no button
         public void StartNewRoom()
         {
-
+            UnityEngine.SceneManagement.SceneManager.LoadScene("Scenes/CloakingBox_Tango/ScanNewRoom");
         }
 
         public void StartOldRoom()
         {
-
+            UnityEngine.SceneManagement.SceneManager.LoadScene("Scenes/CloakingBox_Tango/ChooseOldRoom");
         }
     }
 }

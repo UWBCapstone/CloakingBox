@@ -5,7 +5,7 @@ using UnityEngine;
 #if UNITY_ANDROID || UNITY_EDITOR
 using Tango;
 
-namespace CloakingBox.ScanNewRoom
+namespace CloakingBox
 {
     public class RoomCreator : MonoBehaviour
     {
@@ -55,7 +55,17 @@ namespace CloakingBox.ScanNewRoom
 
         private static string retrieveRoomName()
         {
-            return GameObject.Find("RoomNameInputField").GetComponent<UnityEngine.UI.InputField>().text;
+            GameObject RoomNameInputField = GameObject.Find("RoomNameInputField");
+            if(RoomNameInputField != null)
+            {
+                var text = RoomNameInputField.GetComponent<UnityEngine.UI.InputField>().text;
+                return text;
+            }
+            else
+            {
+                return RoomNameHolder.RoomName;
+            }
+            //return GameObject.Find("RoomNameInputField").GetComponent<UnityEngine.UI.InputField>().text;
         }
 
         private static Material createRoomMaterial()

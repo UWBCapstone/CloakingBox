@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace CloakingBox.ScanNewRoom {
+namespace CloakingBox {
     public class DebugViewLine : MonoBehaviour
     {        
         public bool Visible = true;

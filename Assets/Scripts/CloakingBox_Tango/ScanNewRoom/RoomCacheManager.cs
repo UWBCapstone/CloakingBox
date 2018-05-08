@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace CloakingBox.ScanNewRoom
+namespace CloakingBox
 {
     public class RoomCacheManager : MonoBehaviour
     {
@@ -40,7 +40,17 @@ namespace CloakingBox.ScanNewRoom
         
         private static string retrieveRoomName()
         {
-            return GameObject.Find("RoomNameInputField").GetComponent<UnityEngine.UI.InputField>().text;
+            GameObject RoomNameInputField = GameObject.Find("RoomNameInputField");
+            if (RoomNameInputField != null)
+            {
+                var text = RoomNameInputField.GetComponent<UnityEngine.UI.InputField>().text;
+                return text;
+            }
+            else
+            {
+                return RoomNameHolder.RoomName;
+            }
+            //return GameObject.Find("RoomNameInputField").GetComponent<UnityEngine.UI.InputField>().text;
         }
     }
 }
