@@ -8,6 +8,7 @@ namespace CloakingBox
     {
         public GameObject MainCamera;
         public GameObject RenderTextureCamera;
+        public GameObject RoomCamera;
 
         public void Awake()
         {
@@ -18,6 +19,8 @@ namespace CloakingBox
 
         public void SetCameraCullingMasks()
         {
+            WorkflowDebugger.Log("Setting camera culling masks...");
+
             // Make the render texture camera show the right stuff
             // Make the normal camera show the right stuff
             if (MainCamera != null)
@@ -46,16 +49,37 @@ namespace CloakingBox
                     renderCam.cullingMask = everythingLayerMask & ~(1 << boxLayerMask) & ~(1 << debugLayerMask);
                 }
             }
+            if(RoomCamera != null)
+            {
+                Camera roomCam = RoomCamera.GetComponent<Camera>();
+                if(roomCam != null)
+                {
+                    // Make everything but the room and the debug invisible to the render camera
+                    int roomLayerMask = LayerManager.GetLayerMask(CloakLayers.Room);
+                    int debuglayerMask = LayerManager.GetLayerMask(CloakLayers.Debug);
+                    roomCam.cullingMask = (1 << roomLayerMask) & (1 << debuglayerMask);
+                }
+            }
         }
 
         public void SetCameraSettings()
         {
-            if(RenderTextureCamera != null)
+            if (MainCamera != null)
             {
-                Camera renderCam = RenderTextureCamera.GetComponent<Camera>();
-                if(renderCam != null)
+                Camera mainCam = MainCamera.GetComponent<Camera>();
+                if (RenderTextureCamera != null)
                 {
-                    renderCam.fieldOfView = 120.0f;
+                    Camera renderCam = RenderTextureCamera.GetComponent<Camera>();
+                    if (renderCam != null)
+                    {
+                        WorkflowDebugger.Log("Setting Render camera's field of view to match main camera's field of view...");
+
+                        //renderCam.fieldOfView = 120.0f;
+                        renderCam.fieldOfView = mainCam.fieldOfView;
+
+                        WorkflowDebugger.Log("Setting Render camera's aspect ratio to match main camera's aspect ratio...");
+                        renderCam.aspect = mainCam.aspect;
+                    }
                 }
             }
         }
@@ -67,6 +91,8 @@ namespace CloakingBox
                 Camera renderCam = RenderTextureCamera.GetComponent<Camera>();
                 if(renderCam != null)
                 {
+                    WorkflowDebugger.Log("Setting Render camera's render texture dynamically...");
+
                     RenderTexture rt = renderCam.targetTexture;
                     if(rt == null)
                     {

@@ -11,6 +11,7 @@ namespace CloakingBox.BoxScene
     {
         public string[] roomNames;
         private static AreaDescription[] roomArr_m;
+        private bool ready_m = false;
 
         // Grab all the rooms, make them available
         public void Awake()
@@ -26,6 +27,11 @@ namespace CloakingBox.BoxScene
             //}
 
             WorkflowDebugger.Log("Room Manager started. Area Descriptions loaded...");
+        }
+
+        public bool IsReady()
+        {
+            return ready_m;
         }
 
         private void HandleTangoStuff()
@@ -56,6 +62,8 @@ namespace CloakingBox.BoxScene
                 {
                     roomNames[i] = roomNamesList[i];
                 }
+
+                ready_m = true;
             }
             else
             {

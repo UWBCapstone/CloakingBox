@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace CloakingBox {
+namespace CloakingBox.BoxScene {
     public enum CornerNames
     {
         BottomLeft,

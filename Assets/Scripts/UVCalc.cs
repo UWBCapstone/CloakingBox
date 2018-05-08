@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace CloakingBox
+namespace CloakingBox.BoxScene
 {
     public class UVCalc : MonoBehaviour
     {
@@ -16,6 +16,7 @@ namespace CloakingBox
 
         //public double ScaleFactor = 1.0;
 
+        public bool DebugRays = false;
         public Vector2 LowerLeft;
         public Vector2 LowerRight;
         public Vector2 UpperLeft;
@@ -24,6 +25,12 @@ namespace CloakingBox
         public GameObject MainCamera;
         public GameObject RenderTextureCamera;
         public List<GameObject> CloakingBoxes;
+
+        public Color DebugRayColor_Front = Color.red;
+        public Color DebugRayColor_Top = Color.white;
+        public Color DebugRayColor_Bottom = Color.black;
+        public Color DebugRayColor_Left = Color.yellow;
+        public Color DebugRayColor_Right = Color.blue;
 
         public void Awake()
         {
@@ -131,14 +138,51 @@ namespace CloakingBox
             //Debug.Log("10 point = " + rh10.point);
             //Debug.Log("11 point = " + rh11.point);
 
-            if (faceName == BoxFaceNames.Left)
-            {
-                Debug.DrawLine(mainCamOrigin, rh00.point, Color.red);
-                Debug.DrawLine(mainCamOrigin, rh01.point, Color.green);
-                Debug.DrawLine(mainCamOrigin, rh10.point, Color.blue);
-                Debug.DrawLine(mainCamOrigin, rh11.point, Color.white);
-            }
+            drawDebugRays(faceName, mainCamOrigin, new RaycastHit[4] { rh00, rh01, rh10, rh11 });
+            //if (faceName == BoxFaceNames.Left)
+            //{
+            //    Debug.DrawLine(mainCamOrigin, rh00.point, Color.red);
+            //    Debug.DrawLine(mainCamOrigin, rh01.point, Color.green);
+            //    Debug.DrawLine(mainCamOrigin, rh10.point, Color.blue);
+            //    Debug.DrawLine(mainCamOrigin, rh11.point, Color.white);
+            //}
             return bounds;
+        }
+
+        private void drawDebugRays(BoxFaceNames faceName, Vector3 rayOrigin, RaycastHit[] hits)
+        {
+            foreach (var hit in hits)
+            {
+                drawDebugRay(faceName, rayOrigin, hit.point);
+            }
+        }
+
+        private void drawDebugRay(BoxFaceNames faceName, Vector3 rayOrigin, Vector3 rayEnd)
+        {
+            if (DebugRays)
+            {
+                Color debugColor = Color.green;
+                switch (faceName)
+                {
+                    case BoxFaceNames.Front:
+                        debugColor = DebugRayColor_Front;
+                        break;
+                    case BoxFaceNames.Top:
+                        debugColor = DebugRayColor_Top;
+                        break;
+                    case BoxFaceNames.Bottom:
+                        debugColor = DebugRayColor_Bottom;
+                        break;
+                    case BoxFaceNames.Left:
+                        debugColor = DebugRayColor_Left;
+                        break;
+                    case BoxFaceNames.Right:
+                        debugColor = DebugRayColor_Right;
+                        break;
+                }
+
+                Debug.DrawLine(rayOrigin, rayEnd, debugColor);
+            }
         }
 
         //public Vector3 AdjustViewpoint()

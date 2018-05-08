@@ -5,7 +5,7 @@ using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
 
-namespace CloakingBox
+namespace CloakingBox.BoxScene
 {
     [CustomEditor(typeof(TouchScreenManager))]
     public class TouchScreenManagerEditor : Editor
