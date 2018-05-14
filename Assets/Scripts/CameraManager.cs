@@ -12,9 +12,15 @@ namespace CloakingBox
 
         public void Awake()
         {
+            //DebugLogMainCameraAspectRatio();
             SetCameraCullingMasks();
             SetCameraSettings();
             //SetRenderTexture();
+        }
+
+        private void DebugLogMainCameraAspectRatio()
+        {
+            Debug.Log("Main camera aspect ratio = " + MainCamera.GetComponent<Camera>().aspect);
         }
 
         public void SetCameraCullingMasks()
@@ -79,6 +85,9 @@ namespace CloakingBox
 
                         WorkflowDebugger.Log("Setting Render camera's aspect ratio to match main camera's aspect ratio...");
                         renderCam.aspect = mainCam.aspect;
+
+                        WorkflowDebugger.Log("Setting Render Texture to correct size to match aspect ratio...");
+                        renderCam.targetTexture.width = (int)(renderCam.targetTexture.height * renderCam.aspect);
                     }
                 }
             }
