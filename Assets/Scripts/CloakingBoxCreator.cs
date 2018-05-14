@@ -23,13 +23,13 @@ namespace CloakingBox.BoxScene
 
         public GameObject ViewingCamera;
         public GameObject RenderTextureCamera;
-        private Vector3 boxFaceDimensions = new Vector3(.5f, .5f, .0000001f);
+        public Vector3 boxFaceDimensions = new Vector3(.5f, .5f, .0000001f);
 
         public GameObject GenerateCloakingBox()
         {
-            // Check if the room is ready
-            if (GameObject.FindObjectOfType<RoomManager>().IsReady())
-            {
+            //// Check if the room is ready
+            //if (GameObject.FindObjectOfType<RoomManager>().IsReady())
+            //{
 
                 // Shoot a ray from the Tango camera to the room reconstruction
                 Ray r = new Ray(RenderTextureCamera.transform.position, RenderTextureCamera.transform.forward);
@@ -45,12 +45,12 @@ namespace CloakingBox.BoxScene
                 }
 
                 return cloakingBox;
-            }
-            else
-            {
-                GUIDebug.Log("Room manager was not ready! Check if the Tango permissions have been accepted or not. Returning null cloaking box game object.");
-                return null;
-            }
+            //}
+            //else
+            //{
+            //    GUIDebug.Log("Room manager was not ready! Check if the Tango permissions have been accepted or not. Returning null cloaking box game object.");
+            //    return null;
+            //}
         }
 
         public GameObject GenerateCloakingBox(Vector3 position)

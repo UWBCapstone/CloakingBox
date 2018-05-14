@@ -6,7 +6,6 @@ namespace CloakingBox.BoxScene
 {
     public class TouchScreenManager : MonoBehaviour
     {
-        public CameraManager camManager;
         public static CloakingBoxCreator cloakingBoxCreator;
         public static Vector3 lastHitPosition = new Vector3();
         public static string DebugMsg = "";

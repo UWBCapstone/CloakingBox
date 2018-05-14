@@ -57,7 +57,7 @@ namespace CloakingBox
                     // Make everything but the room and the debug invisible to the render camera
                     int roomLayerMask = LayerManager.GetLayerMask(CloakLayers.Room);
                     int debuglayerMask = LayerManager.GetLayerMask(CloakLayers.Debug);
-                    roomCam.cullingMask = (1 << roomLayerMask) & (1 << debuglayerMask);
+                    roomCam.cullingMask = (1 << roomLayerMask) | (1 << debuglayerMask);
                 }
             }
         }
