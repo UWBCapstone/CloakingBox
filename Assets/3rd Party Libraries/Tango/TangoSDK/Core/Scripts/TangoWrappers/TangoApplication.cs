@@ -260,7 +260,7 @@ namespace Tango
         /// <summary>
         /// Manages Tango3DReconstruction library.
         /// </summary>
-        private Tango3DReconstruction m_tango3DReconstruction;
+        public Tango3DReconstruction m_tango3DReconstruction;
 
         /// <summary>
         /// A set of unresolved ux exceptions.

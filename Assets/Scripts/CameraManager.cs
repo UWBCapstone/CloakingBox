@@ -88,6 +88,8 @@ namespace CloakingBox
 
                         WorkflowDebugger.Log("Setting Render Texture to correct size to match aspect ratio...");
                         renderCam.targetTexture.width = (int)(renderCam.targetTexture.height * renderCam.aspect);
+
+                        GUIDebug.Log("FOV = " + renderCam.fieldOfView + "; Aspect = " + renderCam.aspect + "; targetTextureWidth = " + renderCam.targetTexture.width);
                     }
                 }
             }
