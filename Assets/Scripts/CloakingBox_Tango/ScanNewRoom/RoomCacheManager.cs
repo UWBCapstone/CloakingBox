@@ -6,6 +6,7 @@ namespace CloakingBox
 {
     public class RoomCacheManager : MonoBehaviour
     {
+        public GameObject StopReadingRoomButton;
         //public GameObject RoomGO;
         public List<GameObject> RoomGOs;
         public RoomCreator roomCreationManager;
@@ -39,10 +40,14 @@ namespace CloakingBox
                 RoomGOs.Add(room);
             }
 
-            var stopReadingRoomButton = GameObject.Find("StopReadingRoomButton");
-            if(stopReadingRoomButton != null)
+            //var stopReadingRoomButton = GameObject.Find("StopReadingRoomButton");
+            if(StopReadingRoomButton != null)
             {
-                stopReadingRoomButton.SetActive(false);
+                StopReadingRoomButton.SetActive(false);
+            }
+            else
+            {
+                GUIDebug.Log("Couldn't find StopReadingRoomButton");
             }
         }
 
