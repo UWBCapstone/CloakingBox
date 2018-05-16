@@ -6,6 +6,8 @@ namespace CloakingBox.BoxScene
 {
     public class TouchScreenManager : MonoBehaviour
     {
+        public UnityEngine.UI.Button triggerTransitionButton;
+
         public static CloakingBoxCreator cloakingBoxCreator;
         public static Vector3 lastHitPosition = new Vector3();
         public static string DebugMsg = "";
@@ -43,7 +45,10 @@ namespace CloakingBox.BoxScene
 
         public void OnTap()
         {
-            cloakingBoxCreator.GenerateCloakingBox();
+            if (!triggerTransitionButton.IsActive())
+            {
+                cloakingBoxCreator.GenerateCloakingBox();
+            }
         }
     }
 }

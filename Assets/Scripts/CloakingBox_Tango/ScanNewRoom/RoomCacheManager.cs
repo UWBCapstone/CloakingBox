@@ -16,7 +16,7 @@ namespace CloakingBox
             //RoomGO = RoomCreator.CreateBlankRoom();
             RoomGOs = new List<GameObject>();
             //InvokeRepeating("UpdateRoom", 0.0f, refreshTime);
-            Invoke("UpdateRoom", 6.0f);
+            //Invoke("UpdateRoom", 6.0f);
         }
 
         public void Update()
@@ -37,6 +37,12 @@ namespace CloakingBox
 
                 UpdateRoom(room, meshes[i]);
                 RoomGOs.Add(room);
+            }
+
+            var stopReadingRoomButton = GameObject.Find("StopReadingRoomButton");
+            if(stopReadingRoomButton != null)
+            {
+                stopReadingRoomButton.SetActive(false);
             }
         }
 
