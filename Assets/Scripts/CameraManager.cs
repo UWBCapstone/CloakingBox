@@ -38,8 +38,9 @@ namespace CloakingBox
                     int everythingLayerMask = ~0;
                     int roomLayerMask = LayerManager.GetLayerMask(CloakLayers.Room);
                     int debugLayerMask = LayerManager.GetLayerMask(CloakLayers.Debug);
+                    int roomImageLayerMask = LayerManager.GetLayerMask(CloakLayers.RoomImage);
                     //mainCam.cullingMask = everythingLayerMask & ~(1 << roomLayerMask); // Show everything except for the room layer
-                    mainCam.cullingMask = everythingLayerMask & ~(1 << roomLayerMask) & ~(1 << debugLayerMask); // Show everything except for the room layer
+                    mainCam.cullingMask = everythingLayerMask & ~(1 << roomLayerMask) & ~(1 << debugLayerMask) & ~(1 << roomImageLayerMask); // Show everything except for the room layer, debug lines layer, and room image layer
                 }
             }
             if (RenderTextureCamera != null)
@@ -51,8 +52,9 @@ namespace CloakingBox
                     int everythingLayerMask = ~0;
                     int boxLayerMask = LayerManager.GetLayerMask(CloakLayers.Box);
                     int debugLayerMask = LayerManager.GetLayerMask(CloakLayers.Debug);
+                    int roomLayerMask = LayerManager.GetLayerMask(CloakLayers.Room);
                     //renderCam.cullingMask = everythingLayerMask & ~(1 << boxLayerMask);
-                    renderCam.cullingMask = everythingLayerMask & ~(1 << boxLayerMask) & ~(1 << debugLayerMask);
+                    renderCam.cullingMask = everythingLayerMask & ~(1 << boxLayerMask) & ~(1 << debugLayerMask) & ~(1 << roomLayerMask);
                 }
             }
             if(RoomCamera != null)

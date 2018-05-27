@@ -8,7 +8,8 @@ namespace CloakingBox
     {
         Room,
         Box,
-        Debug
+        Debug,
+        RoomImage
     };
 
     public class LayerManager : MonoBehaviour
@@ -16,10 +17,12 @@ namespace CloakingBox
         public string RoomLayer = "Room";
         public string BoxLayer = "Box";
         public string DebugLayer = "Debug";
+        public string RoomImageLayer = "RoomImage";
         
         public static string RoomLayer_s = "Room";
         public static string BoxLayer_s = "Box";
         public static string DebugLayer_s = "Debug";
+        public static string RoomImageLayer_s = "RoomImage";
 
         // Update is called once per frame
         void Update()
@@ -38,6 +41,10 @@ namespace CloakingBox
             {
                 DebugLayer_s = DebugLayer;
             }
+            if (!RoomImageLayer_s.Equals(RoomImageLayer))
+            {
+                RoomImageLayer_s = RoomImageLayer;
+            }
         }
 
         public static LayerMask GetLayerMask(CloakLayers layer)
@@ -54,6 +61,9 @@ namespace CloakingBox
                 case CloakLayers.Debug:
                     mask = LayerMask.NameToLayer(DebugLayer_s);
                     break;
+                case CloakLayers.RoomImage:
+                    mask = LayerMask.NameToLayer(RoomImageLayer_s);
+                    break;
             }
             return mask;
         }
@@ -64,6 +74,7 @@ namespace CloakingBox
             layerNameList.Add(RoomLayer_s);
             layerNameList.Add(BoxLayer_s);
             layerNameList.Add(DebugLayer_s);
+            layerNameList.Add(RoomImageLayer_s);
 
             return layerNameList;
         }

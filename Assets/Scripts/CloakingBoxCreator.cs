@@ -24,8 +24,8 @@ namespace CloakingBox.BoxScene
         public GameObject ViewingCamera;
         public GameObject RenderTextureCamera;
         public Vector3 boxFaceDimensions = new Vector3(.5f, .5f, .0000001f);
-
-        public GameObject GenerateCloakingBox()
+        
+        public void GenerateCloakingBox()
         {
             //// Check if the room is ready
             //if (GameObject.FindObjectOfType<RoomManager>().IsReady())
@@ -34,8 +34,9 @@ namespace CloakingBox.BoxScene
                 // Shoot a ray from the Tango camera to the room reconstruction
                 Ray r = new Ray(RenderTextureCamera.transform.position, RenderTextureCamera.transform.forward);
                 RaycastHit hitInfo;
-                //Physics.Raycast(r, out hitInfo, float.MaxValue, LayerManager.GetLayerMask(CloakLayers.Box));
-                Physics.Raycast(r, out hitInfo, LayerManager.GetLayerMask(CloakLayers.Room));
+                ////Physics.Raycast(r, out hitInfo, float.MaxValue, LayerManager.GetLayerMask(CloakLayers.Box));
+                //Physics.Raycast(r, out hitInfo, LayerManager.GetLayerMask(CloakLayers.Room)); // intersect with the room object
+                Physics.Raycast(r, out hitInfo, LayerManager.GetLayerMask(CloakLayers.RoomImage)); // intersect with the room image plane
 
                 GUIDebug.LogHitPosition(hitInfo.point.ToString());
 
@@ -45,7 +46,7 @@ namespace CloakingBox.BoxScene
                     GUIDebug.Log("Portal constructed and should be visible.");
                 }
 
-                return cloakingBox;
+                //return cloakingBox;
             //}
             //else
             //{

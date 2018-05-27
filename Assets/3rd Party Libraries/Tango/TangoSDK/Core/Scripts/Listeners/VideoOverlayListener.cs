@@ -423,6 +423,9 @@ namespace Tango
                 Marshal.Copy(image.m_planeData2, m_previousImageBuffer.data, image.m_planeSize0, uvPlaneSize);
 
                 m_shouldSendByteBufferMethodEvent = true;
+
+                // Added by Thomas Brown to circumvent poor camera image availability from Tango API
+                GameObject.FindObjectOfType<CloakingBox.PoseImageCreator>().BufferCameraImage(callbackContext, cameraId, ref image, ref cameraMetadata);
             }
         }
 

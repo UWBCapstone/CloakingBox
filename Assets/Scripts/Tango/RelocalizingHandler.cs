@@ -116,9 +116,12 @@ namespace CloakingBox
 
         public void RegisterRelocalizingBehavior(IRelocalizingBehavior behavior)
         {
-            if (!RelocalizingBehaviorList.Contains(behavior))
+            if (RelocalizingBehaviorList != null)
             {
-                RelocalizingBehaviorList.Add(behavior);
+                if (!RelocalizingBehaviorList.Contains(behavior))
+                {
+                    RelocalizingBehaviorList.Add(behavior);
+                }
             }
         }
 
