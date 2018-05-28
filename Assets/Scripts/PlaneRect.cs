@@ -33,7 +33,7 @@ public class PlaneRect {
         p01 = UpperLeft;
     }
 
-    public PlaneRect(Vector3 min, Vector3 max, Vector3 normal, bool isSquare) : this()
+    public PlaneRect(Vector3 min, Vector3 max, Vector3 normal, bool isSquare, Vector3 right) : this()
     {
         p00 = new Vector3(min.x, min.y, min.z);
         p11 = new Vector3(max.x, max.y, max.z);
@@ -61,16 +61,25 @@ public class PlaneRect {
             }
             else
             {
-                // Assumes it's a vertical rectangle that is horizontally level
-                Vector3 left = cent + Vector3.left;
-                float dotL = Vector3.Dot(p00 - cent, left - cent);
-                left = cent + Vector3.left * dotL;
-                p01 = p00 + (left - p00) * 2;
+                //// Assumes it's a vertical rectangle that is horizontally level
+                //Vector3 left = cent + Vector3.left;
+                //float dotL = Vector3.Dot(p00 - cent, left - cent);
+                //left = cent + Vector3.left * dotL;
+                //p01 = p00 + (left - p00) * 2;
 
-                Vector3 right = cent + Vector3.right;
-                float dotR = Vector3.Dot(p11 - cent, right - cent);
-                right = cent + Vector3.right * dotR;
-                p10 = p11 + (right - p11) * 2;
+                //Vector3 right = cent + Vector3.right;
+                //float dotR = Vector3.Dot(p11 - cent, right - cent);
+                //right = cent + Vector3.right * dotR;
+                //p10 = p11 + (right - p11) * 2;
+
+                Vector3 centTo11 = p11 - cent;
+                float dotR = Vector3.Dot(centTo11, right);
+                p10 = p00 + (2 * dotR * right);
+
+                Vector3 left = -right;
+                Vector3 centTo00 = p00 - cent;
+                float dotL = Vector3.Dot(centTo00, left);
+                p01 = p11 + (2 * dotL * left);
             }
         }
     }

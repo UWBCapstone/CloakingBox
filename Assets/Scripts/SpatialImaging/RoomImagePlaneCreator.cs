@@ -6,8 +6,18 @@ namespace CloakingBox
 {
     public class RoomImagePlaneCreator : MonoBehaviour
     {
+        public bool AutomaticGeneration = true;
+        public float farClipPlaneRatio = 0.9f;
         public GameObject planePrefab;
         public Camera MainCamera;
+
+        public void Awake()
+        {
+            if (AutomaticGeneration)
+            {
+                GenerateImagePlane();
+            }
+        }
 
         public GameObject GenerateImagePlane()
         {
@@ -20,24 +30,25 @@ namespace CloakingBox
             float currentHeight = bounds.size.z;
             plane.transform.localScale = calculatePlaneLocalScale(currentWidth, currentHeight);
             // Push it out from the camera appropriately
-            plane.transform.localPosition = new Vector3(0, 0, MainCamera.farClipPlane);
+            plane.transform.localPosition = new Vector3(0, 0, MainCamera.farClipPlane * farClipPlaneRatio);
             // Set to the correct layer
             plane.layer = LayerManager.GetLayerMask(CloakLayers.RoomImage);
 
-            // Attach this to the RoomImageUpdater
+            // Attach this to the RoomImageUpdater & CloakingBoxVisibilityManager
             GameObject.FindObjectOfType<RoomImageUpdater>().roomImagePlane = plane;
+            GameObject.FindObjectOfType<CloakingBoxVisibilityManager>().SpatialImagingPlane = plane;
 
             return plane;
         }
 
         private Vector3 calculatePlaneLocalScale(float currentWidth, float currentHeight)
         {
-            float dis = MainCamera.farClipPlane;
+            float dis = MainCamera.farClipPlane * farClipPlaneRatio;
             float aspect = MainCamera.aspect;
             float verticalAngle = MainCamera.fieldOfView;
             float horizontalAngle = verticalAngle * aspect;
-            float height = dis * Mathf.Tan(Mathf.Deg2Rad * verticalAngle);
-            float width = dis * Mathf.Tan(Mathf.Deg2Rad * horizontalAngle);
+            float height = dis * Mathf.Tan(Mathf.Deg2Rad * verticalAngle / 2) * 2;
+            float width = dis * Mathf.Tan(Mathf.Deg2Rad * horizontalAngle / 2) * 2;
 
             // x = plane width; z = plane height
             return new Vector3(width / currentWidth, 1, height / currentHeight);

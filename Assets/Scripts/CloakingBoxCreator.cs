@@ -34,11 +34,11 @@ namespace CloakingBox.BoxScene
                 // Shoot a ray from the Tango camera to the room reconstruction
                 Ray r = new Ray(RenderTextureCamera.transform.position, RenderTextureCamera.transform.forward);
                 RaycastHit hitInfo;
-                ////Physics.Raycast(r, out hitInfo, float.MaxValue, LayerManager.GetLayerMask(CloakLayers.Box));
-                //Physics.Raycast(r, out hitInfo, LayerManager.GetLayerMask(CloakLayers.Room)); // intersect with the room object
-                Physics.Raycast(r, out hitInfo, LayerManager.GetLayerMask(CloakLayers.RoomImage)); // intersect with the room image plane
+                //Physics.Raycast(r, out hitInfo, float.MaxValue, LayerManager.GetLayerMask(CloakLayers.Box));
+                Physics.Raycast(r, out hitInfo, LayerManager.GetLayerMask(CloakLayers.Room)); // intersect with the room object
+                //Physics.Raycast(r, out hitInfo, LayerManager.GetLayerMask(CloakLayers.RoomImage)); // intersect with the room image plane
 
-                GUIDebug.LogHitPosition(hitInfo.point.ToString());
+            GUIDebug.LogHitPosition(hitInfo.point.ToString());
 
                 var cloakingBox = GenerateCloakingBox(hitInfo.point);
                 if (cloakingBox != null)

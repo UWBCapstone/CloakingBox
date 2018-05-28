@@ -55,7 +55,7 @@ namespace CloakingBox
             //Debug.Log("ClipPlane Corner10 = " + calc10());
             //Debug.Log("ClipPlane Corner11 = " + calc11());
 
-            clipPlane = new PlaneRect(calc00(), calc11(), -forward, false);
+            clipPlane = new PlaneRect(calc00(), calc11(), -forward, false, right);
         }
 
         private Vector3 calc00()
@@ -105,7 +105,7 @@ namespace CloakingBox
             //Debug.Log("Distance is " + dis);
             //Debug.Log("Hypotenuse is " + hypotenuse);
 
-            clipPlane = new PlaneRect(calc00(), calc11(), -forward, false);
+            clipPlane = new PlaneRect(calc00(), calc11(), -forward, false, right);
             //Debug.Log("deg = " + deg);
             //Debug.Log("New planeRect 00 = " + calc00());
             //Debug.Log("New planeRect 11 = " + calc11());

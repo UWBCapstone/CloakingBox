@@ -6,6 +6,7 @@ namespace CloakingBox
 {
     public enum CloakLayers
     {
+        NULL,
         Room,
         Box,
         Debug,
@@ -63,6 +64,11 @@ namespace CloakingBox
                     break;
                 case CloakLayers.RoomImage:
                     mask = LayerMask.NameToLayer(RoomImageLayer_s);
+                    break;
+                case CloakLayers.NULL:
+                    var r = new LayerMask();
+                    r.value = 0;
+                    return r;
                     break;
             }
             return mask;

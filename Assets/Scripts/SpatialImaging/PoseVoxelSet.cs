@@ -20,13 +20,16 @@ namespace CloakingBox
         public bool Debugging = false;
         private HashSet<PoseVoxel> poseVoxelSet_m;
         
-        private const float xWidth = 0.25f;
-        private const float yWidth = 0.25f;
-        private const float zWidth = 0.25f;
+        /// <summary>
+        /// These are intended to be private consts, but they were made public for easy visibility and adjustment in the Unity Editor during development.
+        /// </summary>
+        public float xWidth = 0.025f;
+        public float yWidth = 0.025f;
+        public float zWidth = 0.025f;
 
-        private const float xDegree = 25f;
-        private const float yDegree = 25f;
-        private const float zDegree = 25f;
+        public float xDegree = 15f;
+        public float yDegree = 15f;
+        public float zDegree = 15f;
         #endregion
 
         #region Methods

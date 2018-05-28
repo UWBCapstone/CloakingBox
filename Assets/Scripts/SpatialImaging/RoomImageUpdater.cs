@@ -9,6 +9,7 @@ namespace CloakingBox
     /// </summary>
     public class RoomImageUpdater : MonoBehaviour
     {
+        public bool DeactivatePlaneOnBadImage = true;
         public GameObject roomImagePlane;
         public PoseVoxelSet poseVoxelSet;
         public PoseImageDictionary poseImageDictionary;
@@ -52,7 +53,10 @@ namespace CloakingBox
             }
             else
             {
-                roomImagePlane.SetActive(false);
+                if (DeactivatePlaneOnBadImage)
+                {
+                    roomImagePlane.SetActive(false);
+                }
             }
         }
 
